@@ -8,7 +8,8 @@ import com.example.youtube40.extensions.loadWithGlide
 import com.example.youtube40.model.Item
 import com.example.youtube40.model.Playlist
 
-class PlaylistAdapter : RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>() {
+class PlaylistAdapter(private val onItemClick: (id: String) -> Unit) :
+    RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>() {
 
     private var list = arrayListOf<Item>()
 
@@ -46,6 +47,9 @@ class PlaylistAdapter : RecyclerView.Adapter<PlaylistAdapter.PlaylistViewHolder>
             binding.tvThemes.text = playlist.snippet?.title.toString()
             (playlist.contentDetails?.itemCount.toString() + " video series").also {
                 binding.tvCountVideo.text = it
+            }
+            binding.root.setOnClickListener {
+                onItemClick(playlist.id.toString())
             }
         }
 

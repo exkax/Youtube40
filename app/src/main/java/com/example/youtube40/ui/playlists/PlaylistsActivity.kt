@@ -1,5 +1,6 @@
 package com.example.youtube40.ui.playlists
 
+import android.content.Intent
 import android.net.NetworkRequest
 import android.view.LayoutInflater
 import android.widget.LinearLayout
@@ -15,7 +16,14 @@ import com.example.youtube40.model.Item
 
 class PlaylistsActivity : BaseActivity<PlaylistViewModel, ActivityPlaylistsBinding>() {
 
-    private val adapter = PlaylistAdapter()
+    private val adapter = PlaylistAdapter(this::clickItem)
+
+    private fun clickItem(id: String) {
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra("key", id)
+        startActivity(intent)
+    }
+
     private lateinit var chekNetwork: ConnectionLiveData
     override val viewModel: PlaylistViewModel by lazy {
         ViewModelProvider(this)[PlaylistViewModel::class.java]
@@ -25,6 +33,7 @@ class PlaylistsActivity : BaseActivity<PlaylistViewModel, ActivityPlaylistsBindi
         binding.recyclerPlaylist.layoutManager = LinearLayoutManager(this)
         binding.recyclerPlaylist.adapter = adapter
     }
+
     override fun initViewModel() {
         viewModel.getPlaylists().observe(this) {
             adapter.setList(it.items as ArrayList<Item>)
