@@ -38,7 +38,7 @@ class PlaylistsActivity : BaseActivity<PlaylistViewModel, ActivityPlaylistsBindi
         viewModel.getPlaylists().observe(this) {
             adapter.setList(it.items as ArrayList<Item>)
         }
-    }
+    }//END
 
     override fun inflateViewBinding(inflater: LayoutInflater): ActivityPlaylistsBinding {
         return ActivityPlaylistsBinding.inflate(inflater)
